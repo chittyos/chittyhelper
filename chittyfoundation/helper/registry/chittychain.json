@@ -1,8 +1,0 @@
-{
-  "system_id": "chittychain",
-  "ownership_scope": "ledger.proof",
-  "doc_ref": "chittycanon://core/services/chain",
-  "interface_ref": "chittyconnect://services/chain",
-  "last_verified": "2025-12-24T00:00:00Z"
-}
-

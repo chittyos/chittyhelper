@@ -3,12 +3,12 @@ set -euo pipefail
 
 # Usage:
 #   1) Obtain CHITTY_REGISTER_TOKEN at get.chitty.cc (onboarding portal)
-#   2) CHITTY_REGISTER_TOKEN=... ./register-chittyhelper.sh [host]
+#   2) CHITTY_REGISTER_TOKEN=... ./scripts/register.sh [host]
 #
 # host defaults to register.chitty.cc; fallback to workers.dev supported.
 
 HOST="${1:-register.chitty.cc}"
-PAYLOAD_FILE="$(dirname "$0")/chittyhelper.registration.json"
+PAYLOAD_FILE="$(dirname "$0")/registration.json"
 
 if [ -z "${CHITTY_REGISTER_TOKEN:-}" ]; then
   echo "CHITTY_REGISTER_TOKEN is required (export it first)" >&2

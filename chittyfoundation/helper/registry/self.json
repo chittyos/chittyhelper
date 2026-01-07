@@ -1,8 +1,0 @@
-{
-  "system_id": "chittyhelper",
-  "ownership_scope": "foundation.helper",
-  "doc_ref": "urn:chittyfoundation:helper:spec:v1.0",
-  "interface_ref": "urn:chittyfoundation:helper:openapi:v1.0",
-  "last_verified": "2025-12-24T00:00:00Z"
-}
-

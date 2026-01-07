@@ -5,50 +5,31 @@ Quick reference for navigating the ChittyHelper repository.
 ## Start Here
 
 1. **[CLAUDE.md](./CLAUDE.md)** - Main guidance for working with this repository
-2. **[Design Spec](./chittyfoundation/helper/docs/ChittyHelper-Canonical-Design-Spec-v1.0.md)** - Canonical design specification v1.0
-3. **[Registration Guide](./chittyfoundation/helper/docs/REGISTRATION.md)** - Service registration instructions
+2. **[Design Spec](./docs/ChittyHelper-Canonical-Design-Spec-v1.0.md)** - Canonical design specification v1.0
+3. **[Registration Guide](./docs/REGISTRATION.md)** - Service registration instructions
 
 ## Core Documentation
 
 ### Design & Architecture
-- [Canonical Design Spec v1.0](./chittyfoundation/helper/docs/ChittyHelper-Canonical-Design-Spec-v1.0.md) - Frozen specification
-- [Validation Summary](./chittyfoundation/helper/docs/Validation-Summary.md) - Validation documentation
-- [AI Code Review](./chittyfoundation/helper/docs/AI_CODE_REVIEW.md) - Review guidelines
+- [Canonical Design Spec v1.0](./docs/ChittyHelper-Canonical-Design-Spec-v1.0.md) - Frozen specification
+- [Validation Summary](./docs/Validation-Summary.md) - Validation documentation
+- [AI Code Review](./docs/AI_CODE_REVIEW.md) - Review guidelines
+- [OpenAPI Spec](./docs/openapi.yaml) - API specification
 
 ### Intent & Classification
-- [Intent Manifest](./chittyfoundation/helper/intent/manifest.json) - Supported intents (I_EXIST, I_OWN, I_DUP, I_DIR)
-- [Intent README](./chittyfoundation/helper/intent/README.md) - Intent vocabulary
-
-## Registry (Read-Only Index)
-
-### Registry Files
-- [Registry Index](./chittyfoundation/helper/registry/index.json) - Master index
-- [Self Registration](./chittyfoundation/helper/registry/self.json) - ChittyHelper's own record
-- [Registry README](./chittyfoundation/helper/registry/README.md) - Data model documentation
-
-### Core Service Records
-- [ChittyID](./chittyfoundation/helper/registry/chittyid.json)
-- [ChittyAuth](./chittyfoundation/helper/registry/chittyauth.json)
-- [ChittyRegister](./chittyfoundation/helper/registry/chittyregister.json)
-- [ChittyRegistry](./chittyfoundation/helper/registry/chittyregistry.json)
-- [ChittyConnect](./chittyfoundation/helper/registry/chittyconnect.json)
-- [ChittyVerify](./chittyfoundation/helper/registry/chittyverify.json)
-- [ChittyChain](./chittyfoundation/helper/registry/chittychain.json)
-- [ChittyCert](./chittyfoundation/helper/registry/chittycert.json)
-- [ChittyTrust](./chittyfoundation/helper/registry/chittytrust.json)
-- [ChittyCanon](./chittyfoundation/helper/registry/chittycanon.json)
-- [ChittyEvidence](./chittyfoundation/helper/registry/chittyevidence.json)
+- [Intent Manifest](./data/intents/manifest.json) - Supported intents (I_EXIST, I_OWN, I_DUP, I_DIR)
+- [Intent README](./data/intents/README.md) - Intent vocabulary
 
 ## Schemas & Examples
 
 ### JSON Schemas
-- [Response Schema](./chittyfoundation/helper/schema/response.schema.json) - ChittyHelperResponse (directional + refusal)
-- [Registry Record Schema](./chittyfoundation/helper/schema/registry.record.schema.json) - Registry data model
+- [Response Schema](./data/schemas/response.schema.json) - ChittyHelperResponse (directional + refusal)
+- [Registry Record Schema](./data/schemas/registry.record.schema.json) - Registry data model
 
 ### Example Responses
-- [Directional Response](./chittyfoundation/helper/schema/examples/directional-response.example.json)
-- [Refusal Response](./chittyfoundation/helper/schema/examples/refusal-response.example.json)
-- [Registry Record](./chittyfoundation/helper/schema/examples/registry-record.example.json)
+- [Directional Response](./data/schemas/examples/directional-response.example.json)
+- [Refusal Response](./data/schemas/examples/refusal-response.example.json)
+- [Registry Record](./data/schemas/examples/registry-record.example.json)
 
 ## Custom GPT Integration
 
@@ -58,8 +39,8 @@ Quick reference for navigating the ChittyHelper repository.
 ## Service Registration
 
 ### Registration Files
-- [Registration Payload](./chittyfoundation/helper/registry/chittyhelper.registration.json) - Service registration JSON
-- [Registration Script](./chittyfoundation/helper/registry/register-chittyhelper.sh) - Automated registration
+- [Registration Payload](./scripts/registration.json) - Service registration JSON
+- [Registration Script](./scripts/register.sh) - Automated registration
 
 ### Registration Workflow
 
@@ -69,7 +50,7 @@ Quick reference for navigating the ChittyHelper repository.
 
 # 2. Submit registration
 export CHITTY_REGISTER_TOKEN="<your-token>"
-./chittyfoundation/helper/registry/register-chittyhelper.sh
+./scripts/register.sh
 
 # 3. Check compliance status
 curl -sS https://register.chitty.cc/api/v1/compliance/chittyhelper | jq .

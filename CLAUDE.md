@@ -18,34 +18,31 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ```
 chittyhelper/
-├── chittyfoundation/helper/      # Core service artifacts
-│   ├── docs/                     # Design specifications
-│   │   ├── ChittyHelper-Canonical-Design-Spec-v1.0.md  # Primary spec
-│   │   ├── REGISTRATION.md       # Service registration guide
-│   │   └── Validation-Summary.md # Validation documentation
-│   ├── intent/                   # Intent classification vocabulary
+├── docs/                         # Design specifications
+│   ├── ChittyHelper-Canonical-Design-Spec-v1.0.md  # Primary spec
+│   ├── REGISTRATION.md           # Service registration guide
+│   ├── Validation-Summary.md     # Validation documentation
+│   └── openapi.yaml              # OpenAPI specification
+├── data/                         # Static data artifacts
+│   ├── intents/                  # Intent classification vocabulary
 │   │   ├── manifest.json         # Supported intents (I_EXIST, I_OWN, I_DUP, I_DIR)
 │   │   └── README.md
-│   ├── registry/                 # Canonical service index (read-only)
-│   │   ├── index.json            # Master index of registry records
-│   │   ├── self.json             # ChittyHelper's own record
-│   │   ├── chittyid.json         # ChittyID service metadata
-│   │   ├── chittyauth.json       # ChittyAuth service metadata
-│   │   ├── [other services].json # Additional service records
-│   │   ├── chittyhelper.registration.json  # Registration payload
-│   │   ├── register-chittyhelper.sh        # Registration script
-│   │   └── README.md
-│   └── schema/                   # JSON Schema definitions
+│   └── schemas/                  # JSON Schema definitions
 │       ├── response.schema.json  # Response envelope schema
 │       ├── registry.record.schema.json  # Registry record schema
 │       └── examples/             # Example responses
+├── scripts/                      # Automation scripts
+│   ├── register.sh               # Registration script for register.chitty.cc
+│   ├── registration.json         # ChittyHelper's registration payload
+│   └── ci/                       # CI/CD scripts
 ├── customgpt/                    # ChatGPT Custom GPT integration
 │   ├── chittyhelper-actions.json # OpenAPI spec for Custom GPT Actions
 │   └── README.md
-├── scripts/ci/                   # CI/CD scripts (currently empty)
 └── .github/                      # GitHub configuration
     └── pull_request_template.md
 ```
+
+**Note:** Service registry lookups use registry.chitty.cc - no local registry cache maintained.
 
 ## Core Architecture Principles
 
@@ -131,9 +128,11 @@ All fields are mandatory; no additional properties allowed.
 | `/api/helper/query`        | POST   | Query architectural questions | ✓         |
 | `/api/helper/registry/:id` | GET    | Retrieve registry metadata    | ✓         |
 
-## Registry Data Model
+## Registry Integration
 
-The `chittyfoundation/helper/registry/` directory contains immutable, read-only index files for canonical ChittyOS services.
+ChittyHelper uses **registry.chitty.cc** for service discovery - no local registry cache is maintained.
+
+**Registry Record Schema:** See `data/schemas/registry.record.schema.json` for the data model.
 
 **Required Fields:**
 - `system_id` - Canonical unique identifier
@@ -141,8 +140,6 @@ The `chittyfoundation/helper/registry/` directory contains immutable, read-only 
 - `doc_ref` - Canonical documentation URI
 - `interface_ref` - Connection endpoint URI
 - `last_verified` - Registry verification timestamp
-
-**No secrets or credentials are stored in registry files.**
 
 ## Service Registration
 
@@ -159,10 +156,10 @@ ChittyHelper is registered through ChittyRegister using the standard ChittyOS re
 export CHITTY_REGISTER_TOKEN="<token from get.chitty.cc>"
 
 # Submit registration (default: register.chitty.cc)
-./chittyfoundation/helper/registry/register-chittyhelper.sh
+./scripts/register.sh
 
 # Or use Workers fallback
-./chittyfoundation/helper/registry/register-chittyhelper.sh chittyregister-production.chitty.workers.dev
+./scripts/register.sh chittyregister-production.chitty.workers.dev
 
 # Check compliance status
 curl -sS https://register.chitty.cc/api/v1/compliance/chittyhelper | jq .
@@ -180,19 +177,9 @@ The `customgpt/` directory contains a self-contained OpenAPI specification for i
 
 ## Development Guidelines
 
-### Modifying Registry Records
-
-When adding or updating service registry records:
-
-1. Follow the registry record schema exactly
-2. All fields are mandatory
-3. Use URN format for documentation and interface references
-4. Update `registry/index.json` to include new records
-5. Verify JSON syntax and schema compliance
-
 ### Schema Validation
 
-All responses must validate against `schema/response.schema.json`:
+All responses must validate against `data/schemas/response.schema.json`:
 
 - Use JSON Schema Draft 2020-12
 - Enforce `additionalProperties: false`
@@ -245,29 +232,32 @@ Terminal states: S7 (Refusal) and S8 (Response Emitted).
 
 ## Common Patterns
 
-### Adding a New Service to Registry
+### Registering ChittyHelper
 
-1. Create `chittyfoundation/helper/registry/{service-name}.json`
-2. Follow the registry record schema
-3. Add filename to `registry/index.json`
-4. Verify JSON syntax
-5. Do not commit secrets
+Use the registration script to register with ChittyRegister:
 
-### Updating Documentation
+```bash
+export CHITTY_REGISTER_TOKEN="<token from get.chitty.cc>"
+./scripts/register.sh
+```
 
-1. All docs in `chittyfoundation/helper/docs/` are design artifacts
-2. Canonical spec is frozen (v1.0)
-3. Operational docs can be updated
-4. Follow declarative, present-tense style
+Registration payload is in `scripts/registration.json`.
 
 ### Testing Response Formats
 
-Example responses are in `schema/examples/`:
+Example responses are in `data/schemas/examples/`:
 - `directional-response.example.json`
 - `refusal-response.example.json`
 - `registry-record.example.json`
 
 Use these as templates for validation testing.
+
+### Updating Documentation
+
+1. All docs in `docs/` are design artifacts
+2. Canonical spec is frozen (v1.0)
+3. Operational docs can be updated
+4. Follow declarative, present-tense style
 
 ## Pull Request Guidelines
 

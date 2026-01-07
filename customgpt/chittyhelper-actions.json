@@ -7,21 +7,15 @@
   },
   "servers": [
     {
-      "url": "https://{host}",
-      "description": "Replace with the deployed ChittyHelper host",
-      "variables": {
-        "host": {
-          "default": "helper.example.com",
-          "description": "Placeholder; update in GPT configuration"
-        }
-      }
+      "url": "https://agent.chitty.cc/helper",
+      "description": "ChittyHelper via Agent Orchestrator"
     }
   ],
   "tags": [
     { "name": "helper", "description": "Read-only navigation" }
   ],
   "paths": {
-    "/api/helper/ping": {
+    "/ping": {
       "get": {
         "tags": ["helper"],
         "summary": "Health indicator",
@@ -45,7 +39,7 @@
         }
       }
     },
-    "/api/helper/query": {
+    "/query": {
       "post": {
         "tags": ["helper"],
         "summary": "Accepts query body (text or JSON)",
@@ -76,7 +70,7 @@
         }
       }
     },
-    "/api/helper/registry/{id}": {
+    "/registry/{id}": {
       "get": {
         "tags": ["helper"],
         "summary": "Returns index-only metadata",

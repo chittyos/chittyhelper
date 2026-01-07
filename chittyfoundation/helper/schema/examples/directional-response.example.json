@@ -1,0 +1,15 @@
+{
+  "system": "chittyhelper",
+  "system_class": "directional_architecture_navigator",
+  "authoritative": false,
+  "decision_safe": false,
+  "response_type": "directional",
+  "intent": "I_EXIST",
+  "definition_state": "DEFINED",
+  "statement": "This capability exists in ChittyCanon under core.services.identity.",
+  "sources": [
+    "chittycanon://core/services/identity"
+  ],
+  "snapshot_time": "2025-12-23T00:00:00Z"
+}
+

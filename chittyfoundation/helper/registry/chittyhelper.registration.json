@@ -1,0 +1,35 @@
+{
+  "name": "chittyhelper",
+  "description": "Deterministic, stateless, non-authoritative architectural navigation layer (Class III)",
+  "version": "1.0.0",
+  "endpoints": [
+    "/health",
+    "/api/v1/status",
+    "/api/helper/ping",
+    "/api/helper/query",
+    "/api/helper/registry/:id"
+  ],
+  "schema": {
+    "version": "1.0.0",
+    "entities": [
+      "ChittyHelperResponse",
+      "ChittyHelperRefusal",
+      "ChittyHelperRegistryRecord"
+    ],
+    "relationships": [
+      "references->ChittyCanon",
+      "indexes->ChittyRegistry",
+      "binds->ChittyDiscovery"
+    ]
+  },
+  "security": {
+    "authentication": "oauth2",
+    "encryption": "https"
+  },
+  "maintainer": {
+    "name": "ChittyFoundation",
+    "email": "foundation@chitty.cc"
+  },
+  "documentation": "urn:chittyfoundation:helper:spec:v1.0"
+}
+

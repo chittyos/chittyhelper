@@ -1,0 +1,38 @@
+name: AI Review Mentions
+
+on:
+  pull_request:
+    types: [opened, reopened]
+
+permissions:
+  pull-requests: write
+
+env:
+  MENTION_CODERABBIT: ${{ vars.MENTION_CODERABBIT || '@coderabbitai' }}
+  MENTION_CODEX: ${{ vars.MENTION_CODEX || '@codex-review-bot' }}
+  MENTION_CLAUDE: ${{ vars.MENTION_CLAUDE || '@claude-review-bot' }}
+
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post AI review mention comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const body = [
+              'Requesting AI reviews for this PR:',
+              '',
+              `- CodeRabbit: ${process.env.MENTION_CODERABBIT}`,
+              `- Codex: ${process.env.MENTION_CODEX}`,
+              `- Claude: ${process.env.MENTION_CLAUDE}`,
+              '',
+              'Please run your standard automated review and post findings.'
+            ].join('\n');
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.pull_request.number,
+              body
+            });
+

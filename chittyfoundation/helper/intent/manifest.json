@@ -1,0 +1,14 @@
+{
+  "system": "chittyhelper",
+  "system_class": "directional_architecture_navigator",
+  "authoritative": false,
+  "decision_safe": false,
+  "supported_intents": ["I_EXIST", "I_OWN", "I_DUP", "I_DIR"],
+  "endpoints": [
+    { "route": "/api/helper/ping", "method": "GET", "readOnly": true },
+    { "route": "/api/helper/query", "method": "POST", "readOnly": true },
+    { "route": "/api/helper/registry/:id", "method": "GET", "readOnly": true }
+  ],
+  "snapshot_time": "2025-12-24T00:00:00Z"
+}
+

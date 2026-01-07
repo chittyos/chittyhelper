@@ -1,0 +1,8 @@
+{
+  "system_id": "chittyevidence",
+  "ownership_scope": "evidence.r2",
+  "doc_ref": "chittycanon://core/services/evidence",
+  "interface_ref": "chittyconnect://services/evidence",
+  "last_verified": "2025-12-24T00:00:00Z"
+}
+

@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chitty.foundation/schemas/chittyhelper/registry.record.schema.json",
+  "title": "ChittyHelperRegistryRecord",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "system_id",
+    "ownership_scope",
+    "doc_ref",
+    "interface_ref",
+    "last_verified"
+  ],
+  "properties": {
+    "system_id": { "type": "string", "minLength": 1 },
+    "ownership_scope": { "type": "string", "minLength": 1 },
+    "doc_ref": { "type": "string", "format": "uri" },
+    "interface_ref": { "type": "string", "format": "uri" },
+    "last_verified": { "type": "string", "format": "date-time" }
+  }
+}
+

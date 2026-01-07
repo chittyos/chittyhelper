@@ -1,0 +1,8 @@
+{
+  "system_id": "chittyid",
+  "ownership_scope": "identity.authority",
+  "doc_ref": "chittycanon://core/services/identity",
+  "interface_ref": "https://connect.chitty.cc/services/identity",
+  "last_verified": "2025-12-23T00:00:00Z"
+}
+

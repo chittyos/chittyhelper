@@ -1,0 +1,8 @@
+{
+  "system_id": "chittyregister",
+  "ownership_scope": "registry.register",
+  "doc_ref": "chittycanon://core/services/register",
+  "interface_ref": "chittyconnect://services/register",
+  "last_verified": "2025-12-24T00:00:00Z"
+}
+

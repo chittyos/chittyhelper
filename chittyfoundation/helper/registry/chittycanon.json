@@ -1,0 +1,8 @@
+{
+  "system_id": "chittycanon",
+  "ownership_scope": "architecture.schema",
+  "doc_ref": "chittycanon://root",
+  "interface_ref": "chittyconnect://services/canon",
+  "last_verified": "2025-12-24T00:00:00Z"
+}
+

@@ -1,0 +1,58 @@
+name: ChittyHelper — Register via ChittyRegister
+
+on:
+  workflow_dispatch:
+    inputs:
+      host:
+        description: "Registration host (default register.chitty.cc)"
+        required: false
+        default: "register.chitty.cc"
+  push:
+    branches: [ main, master ]
+    paths:
+      - 'chittyfoundation/helper/**'
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+env:
+  REGISTER_HOST: ${{ github.event.inputs.host != '' && github.event.inputs.host || 'register.chitty.cc' }}
+
+jobs:
+  register:
+    name: Submit registration to ChittyRegister
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Show registration host
+        run: echo "REGISTER_HOST=${REGISTER_HOST}"
+
+      - name: Preflight requirements (optional)
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -sS "https://${REGISTER_HOST}/api/v1/requirements" | head -n 200 || true
+
+      - name: Submit registration
+        shell: bash
+        env:
+          CHITTY_REGISTER_TOKEN: ${{ secrets.CHITTY_REGISTER_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [ -z "${CHITTY_REGISTER_TOKEN:-}" ]; then
+            echo "CHITTY_REGISTER_TOKEN secret is not set. Add it in repo settings." >&2
+            exit 1
+          fi
+          chmod +x chittyfoundation/helper/registry/register-chittyhelper.sh
+          chittyfoundation/helper/registry/register-chittyhelper.sh "${REGISTER_HOST}"
+
+      - name: Check compliance status
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -sS "https://${REGISTER_HOST}/api/v1/compliance/chittyhelper" | head -n 200 || true
+

@@ -1,0 +1,170 @@
+openapi: 3.1.0
+info:
+  title: ChittyHelper API — Custom GPT Actions
+  version: 1.0.0
+  description: |
+    ChittyHelper is a Class‑III informational navigator. All endpoints are read‑only and stateless.
+    Use this schema for ChatGPT Custom GPT Actions ingestion.
+servers:
+  - url: https://{host}
+    description: Replace with the deployed ChittyHelper host
+    variables:
+      host:
+        default: helper.example.com
+        description: Placeholder; update in GPT configuration
+tags:
+  - name: helper
+    description: Read-only navigation
+paths:
+  /api/helper/ping:
+    get:
+      tags: [helper]
+      summary: Health indicator
+      operationId: ping
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required: [status]
+                properties:
+                  status:
+                    type: string
+                    enum: [ok]
+
+  /api/helper/query:
+    post:
+      tags: [helper]
+      summary: Accepts query body (text or JSON)
+      operationId: query
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - type: string
+                - type: object
+          text/plain:
+            schema:
+              type: string
+      responses:
+        '200':
+          description: Directional response or refusal
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChittyHelperResponse'
+
+  /api/helper/registry/{id}:
+    get:
+      tags: [helper]
+      summary: Returns index-only metadata
+      operationId: getRegistryRecord
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Registry record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChittyHelperRegistryRecord'
+
+components:
+  schemas:
+    ChittyHelperResponse:
+      oneOf:
+        - $ref: '#/components/schemas/ChittyHelperDirectional'
+        - $ref: '#/components/schemas/ChittyHelperRefusal'
+
+    ChittyHelperDirectional:
+      type: object
+      additionalProperties: false
+      required:
+        - system
+        - system_class
+        - authoritative
+        - decision_safe
+        - response_type
+        - intent
+        - definition_state
+        - statement
+        - sources
+        - snapshot_time
+      properties:
+        system:
+          type: string
+          const: chittyhelper
+        system_class:
+          type: string
+          const: directional_architecture_navigator
+        authoritative:
+          type: boolean
+          enum: [false]
+        decision_safe:
+          type: boolean
+          enum: [false]
+        response_type:
+          type: string
+          const: directional
+        intent:
+          type: string
+          enum: [I_EXIST, I_OWN, I_DUP, I_DIR]
+        definition_state:
+          type: string
+          enum: [DEFINED, UNDEFINED, IMPLICIT, DISTRIBUTED, CONTESTED]
+        statement:
+          type: string
+          description: Single-sentence, present-tense statement.
+        sources:
+          type: array
+          minItems: 1
+          items:
+            type: string
+        snapshot_time:
+          type: string
+          format: date-time
+
+    ChittyHelperRefusal:
+      type: object
+      additionalProperties: false
+      required: [system, response_type, reason, snapshot_time]
+      properties:
+        system:
+          type: string
+          const: chittyhelper
+        response_type:
+          type: string
+          const: refusal
+        reason:
+          type: string
+          enum: [out_of_scope]
+        snapshot_time:
+          type: string
+          format: date-time
+
+    ChittyHelperRegistryRecord:
+      type: object
+      additionalProperties: false
+      required: [system_id, ownership_scope, doc_ref, interface_ref, last_verified]
+      properties:
+        system_id:
+          type: string
+        ownership_scope:
+          type: string
+        doc_ref:
+          type: string
+        interface_ref:
+          type: string
+        last_verified:
+          type: string
+          format: date-time
+

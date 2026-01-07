@@ -1,0 +1,8 @@
+{
+  "system_id": "chittyverify",
+  "ownership_scope": "verification.authority",
+  "doc_ref": "chittycanon://core/services/verify",
+  "interface_ref": "chittyconnect://services/verify",
+  "last_verified": "2025-12-24T00:00:00Z"
+}
+

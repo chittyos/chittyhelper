@@ -1,0 +1,8 @@
+{
+  "system_id": "chittyauth",
+  "ownership_scope": "security.authn",
+  "doc_ref": "chittycanon://core/services/auth",
+  "interface_ref": "chittyconnect://services/auth",
+  "last_verified": "2025-12-24T00:00:00Z"
+}
+

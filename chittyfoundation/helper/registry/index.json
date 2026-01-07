@@ -1,0 +1,18 @@
+{
+  "index_version": 1,
+  "records": [
+    "self.json",
+    "chittyid.json",
+    "chittycert.json",
+    "chittychain.json",
+    "chittycanon.json",
+    "chittyverify.json",
+    "chittytrust.json",
+    "chittyevidence.json",
+    "chittyconnect.json",
+    "chittyauth.json",
+    "chittyregistry.json",
+    "chittyregister.json"
+  ]
+}
+

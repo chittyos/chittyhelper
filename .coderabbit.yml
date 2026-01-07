@@ -1,0 +1,44 @@
+version: 1
+review:
+  enable: true
+  event_triggers:
+    - pull_request
+  max_comments: 20
+  summary_only: false
+  path_includes:
+    - "**/*.ts"
+    - "**/*.tsx"
+    - "**/*.js"
+    - "**/*.jsx"
+    - "**/*.py"
+    - "**/*.go"
+    - "**/*.rs"
+    - "**/*.sh"
+    - "**/*.yml"
+    - "**/*.yaml"
+  path_excludes:
+    - "**/node_modules/**"
+    - "**/dist/**"
+    - "**/build/**"
+    - "**/*.min.*"
+rules:
+  - id: security
+    title: Security and secrets
+    description: Flag hard-coded secrets, unsafe eval/exec, insecure transports.
+    severity: high
+  - id: correctness
+    title: Correctness and edge cases
+    description: Identify logic errors, unhandled errors, and edge cases.
+    severity: high
+  - id: performance
+    title: Performance
+    description: Note obvious hot paths, N+1 queries, needless loops.
+    severity: medium
+  - id: maintainability
+    title: Maintainability
+    description: Suggest simplifications and tests to add; avoid nitpicks.
+    severity: low
+comments:
+  style: concise
+  max_suggestions_per_file: 5
+
